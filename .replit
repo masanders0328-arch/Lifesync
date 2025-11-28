@@ -62,3 +62,4 @@ integrations = ["javascript_database:1.0.0", "javascript_google_analytics:1.0.0"
 [userenv.shared]
 SITE_PASSWORD = "lifesync123"
 PASSWORD_TOKEN = "lifesync-secure-token-2025"
+REPLIT_PASSWORD = "single0525$"

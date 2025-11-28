@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -9,7 +9,6 @@ import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
-import PasswordProtect from "@/pages/PasswordProtect";
 import Dashboard from "@/pages/Dashboard";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentCancel from "@/pages/PaymentCancel";
@@ -17,13 +16,9 @@ import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
 import NotFound from "@/pages/not-found";
 
-function Router({ isAuthenticated }: { isAuthenticated: boolean }) {
+function Router() {
   useAnalytics();
   
-  if (!isAuthenticated) {
-    return <Route component={PasswordProtect} />;
-  }
-
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -40,10 +35,6 @@ function Router({ isAuthenticated }: { isAuthenticated: boolean }) {
 }
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("auth_token")
-  );
-
   useEffect(() => {
     if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
       console.warn('Missing required Google Analytics key: VITE_GA_MEASUREMENT_ID');
@@ -52,16 +43,12 @@ function App() {
     }
   }, []);
 
-  const handleUnlock = (token: string) => {
-    setIsAuthenticated(true);
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        {isAuthenticated && <AIAssistant />}
-        <Router isAuthenticated={isAuthenticated} />
+        <AIAssistant />
+        <Router />
       </TooltipProvider>
     </QueryClientProvider>
   );
