@@ -16,7 +16,7 @@ export function getAIClient(): OpenAI {
 export async function generateGoalRecommendations(userContext: string): Promise<string> {
   const openai = getAIClient();
   
-  const message = await openai.messages.create({
+  const message = await openai.chat.completions.create({
     model: "gpt-4-mini",
     max_tokens: 1024,
     messages: [
@@ -27,9 +27,9 @@ export async function generateGoalRecommendations(userContext: string): Promise<
     ]
   });
 
-  const content = message.content[0];
-  if (content.type === 'text') {
-    return content.text;
+  const content = message.choices[0].message.content;
+  if (content) {
+    return content;
   }
   throw new Error("Unexpected response type from AI");
 }
@@ -37,7 +37,7 @@ export async function generateGoalRecommendations(userContext: string): Promise<
 export async function generateFinancialInsights(financialData: string): Promise<string> {
   const openai = getAIClient();
   
-  const message = await openai.messages.create({
+  const message = await openai.chat.completions.create({
     model: "gpt-4-mini",
     max_tokens: 1024,
     messages: [
@@ -48,9 +48,9 @@ export async function generateFinancialInsights(financialData: string): Promise<
     ]
   });
 
-  const content = message.content[0];
-  if (content.type === 'text') {
-    return content.text;
+  const content = message.choices[0].message.content;
+  if (content) {
+    return content;
   }
   throw new Error("Unexpected response type from AI");
 }
@@ -62,7 +62,7 @@ export async function generateAIResponse(userMessage: string, context: string = 
 ${context ? `User context: ${context}` : ""}
 Be concise, helpful, and encouraging. Keep responses under 150 words.`;
 
-  const message = await openai.messages.create({
+  const message = await openai.chat.completions.create({
     model: "gpt-4-mini",
     max_tokens: 256,
     messages: [
@@ -74,9 +74,9 @@ Be concise, helpful, and encouraging. Keep responses under 150 words.`;
     system: systemPrompt
   });
 
-  const content = message.content[0];
-  if (content.type === 'text') {
-    return content.text;
+  const content = message.choices[0].message.content;
+  if (content) {
+    return content;
   }
   throw new Error("Unexpected response type from AI");
 }
@@ -84,7 +84,7 @@ Be concise, helpful, and encouraging. Keep responses under 150 words.`;
 export async function analyzeGoalProgress(goalDescription: string, progress: number): Promise<string> {
   const openai = getAIClient();
   
-  const message = await openai.messages.create({
+  const message = await openai.chat.completions.create({
     model: "gpt-4-mini",
     max_tokens: 512,
     messages: [
@@ -95,9 +95,9 @@ export async function analyzeGoalProgress(goalDescription: string, progress: num
     ]
   });
 
-  const content = message.content[0];
-  if (content.type === 'text') {
-    return content.text;
+  const content = message.choices[0].message.content;
+  if (content) {
+    return content;
   }
   throw new Error("Unexpected response type from AI");
 }

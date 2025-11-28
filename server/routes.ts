@@ -256,10 +256,14 @@ export async function registerRoutes(
   app.get("/api/affiliates", async (req, res) => {
     try {
       const partners = [
-        { id: "partner-1", name: "Financial Platform Partner", category: "Investment & Trading" },
-        { id: "partner-2", name: "Budgeting Software", category: "Personal Finance" },
-        { id: "partner-3", name: "Wealth Management", category: "Advisory Services" },
-        { id: "partner-4", name: "Crypto Trading", category: "Digital Assets" }
+        { id: "quickbooks", name: "QuickBooks", category: "Accounting", link: "https://quickbooks.intuit.com/partners/", commission: "$50-200/lead" },
+        { id: "freshbooks", name: "FreshBooks", category: "Invoicing & Accounting", link: "https://www.freshbooks.com/affiliate-program", commission: "$88-200/sale" },
+        { id: "xero", name: "Xero", category: "Cloud Accounting", link: "https://www.xero.com/partners/", commission: "$10/subscriber" },
+        { id: "gusto", name: "Gusto", category: "Payroll & HR", link: "https://gusto.com/partners", commission: "Recurring bonus" },
+        { id: "personal-capital", name: "Personal Capital", category: "Wealth Management", link: "https://www.personalcapital.com/affiliate", commission: "$100/qualified lead" },
+        { id: "ynab", name: "YNAB (You Need A Budget)", category: "Budgeting", link: "https://www.youneedabudget.com/affiliates/", commission: "Recurring commission" },
+        { id: "robinhood", name: "Robinhood", category: "Stock Trading", link: "https://www.robinhood.com/affiliate", commission: "$5-20/funded account" },
+        { id: "etoro", name: "eToro", category: "Trading Platform", link: "https://www.etoro.com/en-us/partners/", commission: "25% revenue share" }
       ];
       res.json({ partners });
     } catch (error: any) {

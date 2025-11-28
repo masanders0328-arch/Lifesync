@@ -8,6 +8,7 @@ import { AIAssistant } from "@/components/AIAssistant";
 import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import Home from "@/pages/Home";
+import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentCancel from "@/pages/PaymentCancel";
