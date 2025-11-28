@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
+import { AIInsights } from "@/components/AIInsights";
 import { Testimonials } from "@/components/Testimonials";
 import { MiniGames } from "@/components/MiniGames";
 import { FinancialCalculators } from "@/components/FinancialCalculators";
@@ -18,6 +19,7 @@ export default function Home() {
       <main>
         <Hero />
         <Features />
+        <AIInsights />
         <MiniGames />
         <FinancialCalculators />
         <AffiliatePartners />

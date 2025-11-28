@@ -5,6 +5,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient";
 import { insertContactSchema, insertNewsletterSchema, PRICING_PLANS } from "@shared/schema";
+import { generateAIResponse, generateGoalRecommendations, generateFinancialInsights } from "./aiClient";
 import { z } from "zod";
 
 export async function registerRoutes(
@@ -278,6 +279,65 @@ export async function registerRoutes(
     } catch (error: any) {
       console.error("Affiliate link error:", error);
       res.status(500).json({ error: "Failed to track affiliate link" });
+    }
+  });
+
+  // AI Assistant Endpoints
+  app.post("/api/ai/chat", async (req, res) => {
+    try {
+      const { message, context } = req.body;
+      if (!message) {
+        return res.status(400).json({ error: "Message is required" });
+      }
+      const reply = await generateAIResponse(message, context);
+      res.json({ reply });
+    } catch (error: any) {
+      console.error("AI chat error:", error);
+      res.status(500).json({ error: "Failed to generate AI response" });
+    }
+  });
+
+  app.post("/api/ai/goal-recommendations", async (req, res) => {
+    try {
+      const { userContext } = req.body;
+      if (!userContext) {
+        return res.status(400).json({ error: "User context is required" });
+      }
+      const recommendations = await generateGoalRecommendations(userContext);
+      res.json({ recommendations });
+    } catch (error: any) {
+      console.error("Goal recommendations error:", error);
+      res.status(500).json({ error: "Failed to generate recommendations" });
+    }
+  });
+
+  app.post("/api/ai/financial-insights", async (req, res) => {
+    try {
+      const { financialData } = req.body;
+      if (!financialData) {
+        return res.status(400).json({ error: "Financial data is required" });
+      }
+      const insights = await generateFinancialInsights(financialData);
+      res.json({ insights });
+    } catch (error: any) {
+      console.error("Financial insights error:", error);
+      res.status(500).json({ error: "Failed to generate insights" });
+    }
+  });
+
+  app.post("/api/ai/analyze-progress", async (req, res) => {
+    try {
+      const { goalDescription, progress } = req.body;
+      if (!goalDescription || progress === undefined) {
+        return res.status(400).json({ error: "Goal description and progress are required" });
+      }
+      const analysis = await generateAIResponse(
+        `Analyze my goal progress: "${goalDescription}" - I'm at ${progress}% completion. Provide next steps and encouragement.`
+      );
+      res.json({ analysis });
+    } catch (error: any) {
+      console.error("Progress analysis error:", error);
+      res.status(500).json({ error: "Failed to analyze progress" });
     }
   });
 
