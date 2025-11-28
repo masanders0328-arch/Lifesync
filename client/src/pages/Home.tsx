@@ -2,6 +2,9 @@ import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
 import { Testimonials } from "@/components/Testimonials";
+import { MiniGames } from "@/components/MiniGames";
+import { FinancialCalculators } from "@/components/FinancialCalculators";
+import { AffiliatePartners } from "@/components/AffiliatePartners";
 import { Pricing } from "@/components/Pricing";
 import { About } from "@/components/About";
 import { Newsletter } from "@/components/Newsletter";
@@ -15,6 +18,9 @@ export default function Home() {
       <main>
         <Hero />
         <Features />
+        <MiniGames />
+        <FinancialCalculators />
+        <AffiliatePartners />
         <Testimonials />
         <Pricing />
         <About />

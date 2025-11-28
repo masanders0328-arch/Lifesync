@@ -207,5 +207,79 @@ export async function registerRoutes(
     }
   });
 
+  // Mini-games endpoints
+  app.post("/api/games/play", async (req, res) => {
+    try {
+      const { gameType, difficulty, userId } = req.body;
+      if (!gameType || !difficulty) {
+        return res.status(400).json({ error: "Game type and difficulty are required" });
+      }
+      res.json({ success: true, message: "Game started", gameId: Math.random().toString() });
+    } catch (error: any) {
+      console.error("Game start error:", error);
+      res.status(500).json({ error: "Failed to start game" });
+    }
+  });
+
+  app.post("/api/games/score", async (req, res) => {
+    try {
+      const { gameId, score, timeSpent } = req.body;
+      if (!gameId || score === undefined) {
+        return res.status(400).json({ error: "Game ID and score are required" });
+      }
+      const pointsEarned = Math.min(score / 10, 150);
+      res.json({ success: true, pointsEarned, message: "Score recorded" });
+    } catch (error: any) {
+      console.error("Score recording error:", error);
+      res.status(500).json({ error: "Failed to record score" });
+    }
+  });
+
+  // Financial calculators endpoints
+  app.get("/api/calculators", async (req, res) => {
+    try {
+      const calculators = [
+        { id: "retirement", name: "Retirement Calculator", affiliate: true },
+        { id: "investment", name: "Investment Returns", affiliate: true },
+        { id: "budget", name: "Budget Planner", affiliate: true },
+        { id: "tax", name: "Tax Calculator", affiliate: true }
+      ];
+      res.json({ calculators });
+    } catch (error: any) {
+      console.error("Calculators error:", error);
+      res.status(500).json({ error: "Failed to get calculators" });
+    }
+  });
+
+  // Affiliate partners endpoints
+  app.get("/api/affiliates", async (req, res) => {
+    try {
+      const partners = [
+        { id: "partner-1", name: "Financial Platform Partner", category: "Investment & Trading" },
+        { id: "partner-2", name: "Budgeting Software", category: "Personal Finance" },
+        { id: "partner-3", name: "Wealth Management", category: "Advisory Services" },
+        { id: "partner-4", name: "Crypto Trading", category: "Digital Assets" }
+      ];
+      res.json({ partners });
+    } catch (error: any) {
+      console.error("Affiliates error:", error);
+      res.status(500).json({ error: "Failed to get affiliates" });
+    }
+  });
+
+  app.post("/api/affiliates/link", async (req, res) => {
+    try {
+      const { partnerId, affiliate } = req.body;
+      if (!partnerId) {
+        return res.status(400).json({ error: "Partner ID is required" });
+      }
+      trackEvent('affiliate_link_clicked', 'partnerships', partnerId, 0);
+      res.json({ success: true, message: "Affiliate link tracked" });
+    } catch (error: any) {
+      console.error("Affiliate link error:", error);
+      res.status(500).json({ error: "Failed to track affiliate link" });
+    }
+  });
+
   return httpServer;
 }
